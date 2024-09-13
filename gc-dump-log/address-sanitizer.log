@@ -1,0 +1,107 @@
+=================================================================
+==78034==ERROR: AddressSanitizer: heap-use-after-free on address 0x00010760a198 at pc 0x0001043b96f0 bp 0x00016babe0c0 sp 0x00016babe0b8
+READ of size 8 at 0x00010760a198 thread T0
+    #0 0x1043b96ec in kid_hashmap_free kid.c:243
+    #1 0x104486edc in __js_gcdump_objects gc.c:2178
+    #2 0x10448891c in js_gcdump_objects gc.c:2187
+    #3 0x10445ed98 in js_call_c_function+0xe74 (qjs:arm64+0x10013ad98)
+    #4 0x104416f9c in JS_CallInternal exec.c:98
+    #5 0x104421a78 in JS_CallInternal exec.c:469
+    #6 0x104458ec0 in JS_CallFree+0x3bc (qjs:arm64+0x100134ec0)
+    #7 0x10469193c in JS_EvalFunctionInternal vm.c:875
+    #8 0x104693678 in __JS_EvalInternal vm.c:1002
+    #9 0x104694a24 in JS_EvalInternal vm.c:1019
+    #10 0x104694e40 in JS_EvalThis vm.c:1047
+    #11 0x104695140 in JS_Eval vm.c:1054
+    #12 0x104329340 in eval_buf qjs.c:68
+    #13 0x104329d50 in eval_file qjs.c:99
+    #14 0x10432b5a8 in main qjs.c:541
+    #15 0x195a07150  (<unknown module>)
+
+0x00010760a198 is located 8 bytes inside of 40-byte region [0x00010760a190,0x00010760a1b8)
+freed by thread T0 here:
+    #0 0x105173260 in wrap_free+0x98 (libclang_rt.asan_osx_dynamic.dylib:arm64e+0x53260)
+    #1 0x1046973c0 in js_def_free vm.c:233
+    #2 0x10446c484 in js_free_rt gc.c:29
+    #3 0x1043b6d9c in kid_free kid.c:16
+    #4 0x1043b860c in kid_hashmap_key_shallow_free kid.c:160
+    #5 0x1043b96b4 in kid_hashmap_free kid.c:245
+    #6 0x104486edc in __js_gcdump_objects gc.c:2178
+    #7 0x10448891c in js_gcdump_objects gc.c:2187
+    #8 0x10445ed98 in js_call_c_function+0xe74 (qjs:arm64+0x10013ad98)
+    #9 0x104416f9c in JS_CallInternal exec.c:98
+    #10 0x104421a78 in JS_CallInternal exec.c:469
+    #11 0x104458ec0 in JS_CallFree+0x3bc (qjs:arm64+0x100134ec0)
+    #12 0x10469193c in JS_EvalFunctionInternal vm.c:875
+    #13 0x104693678 in __JS_EvalInternal vm.c:1002
+    #14 0x104694a24 in JS_EvalInternal vm.c:1019
+    #15 0x104694e40 in JS_EvalThis vm.c:1047
+    #16 0x104695140 in JS_Eval vm.c:1054
+    #17 0x104329340 in eval_buf qjs.c:68
+    #18 0x104329d50 in eval_file qjs.c:99
+    #19 0x10432b5a8 in main qjs.c:541
+    #20 0x195a07150  (<unknown module>)
+
+previously allocated by thread T0 here:
+    #0 0x105173124 in wrap_malloc+0x94 (libclang_rt.asan_osx_dynamic.dylib:arm64e+0x53124)
+    #1 0x1046971f0 in js_def_malloc vm.c:218
+    #2 0x10446c40c in js_malloc_rt gc.c:25
+    #3 0x1043b6ce0 in kid_malloc kid.c:13
+    #4 0x1043b8424 in kid_hashmap_key_shallow_copy kid.c:148
+    #5 0x1043b8e1c in kid_hashmap_set kid.c:202
+    #6 0x10447f9c8 in js_gcdump_add_cstr gc.c:1704
+    #7 0x1044804f8 in js_gcdump_add_atom gc.c:1729
+    #8 0x1044820a8 in js_gcdump_process_obj gc.c:1826
+    #9 0x10447e974 in JS_GCDumpValue gc.c:1538
+    #10 0x10448a6f8 in JS_Context_gcdump gc.c:1429
+    #11 0x10448867c in gcdump_children gc.c:1625
+    #12 0x104486c30 in __js_gcdump_objects gc.c:2161
+    #13 0x10448891c in js_gcdump_objects gc.c:2187
+    #14 0x10445ed98 in js_call_c_function+0xe74 (qjs:arm64+0x10013ad98)
+    #15 0x104416f9c in JS_CallInternal exec.c:98
+    #16 0x104421a78 in JS_CallInternal exec.c:469
+    #17 0x104458ec0 in JS_CallFree+0x3bc (qjs:arm64+0x100134ec0)
+    #18 0x10469193c in JS_EvalFunctionInternal vm.c:875
+    #19 0x104693678 in __JS_EvalInternal vm.c:1002
+    #20 0x104694a24 in JS_EvalInternal vm.c:1019
+    #21 0x104694e40 in JS_EvalThis vm.c:1047
+    #22 0x104695140 in JS_Eval vm.c:1054
+    #23 0x104329340 in eval_buf qjs.c:68
+    #24 0x104329d50 in eval_file qjs.c:99
+    #25 0x10432b5a8 in main qjs.c:541
+    #26 0x195a07150  (<unknown module>)
+
+SUMMARY: AddressSanitizer: heap-use-after-free kid.c:243 in kid_hashmap_free
+Shadow bytes around the buggy address:
+  0x000107609f00: fa fa 00 00 00 00 00 fa fa fa 00 00 00 00 00 fa
+  0x000107609f80: fa fa 00 00 00 00 00 fa fa fa 00 00 00 00 00 fa
+  0x00010760a000: fa fa 00 00 00 00 00 fa fa fa 00 00 00 00 00 fa
+  0x00010760a080: fa fa 00 00 00 00 00 fa fa fa 00 00 00 00 00 fa
+  0x00010760a100: fa fa 00 00 00 00 00 fa fa fa 00 00 00 00 00 fa
+=>0x00010760a180: fa fa fd[fd]fd fd fd fa fa fa 00 00 00 00 00 fa
+  0x00010760a200: fa fa 00 00 00 00 00 fa fa fa 00 00 00 00 00 fa
+  0x00010760a280: fa fa 00 00 00 00 00 fa fa fa 00 00 00 00 00 00
+  0x00010760a300: fa fa 00 00 00 00 00 00 fa fa fd fd fd fd fd fd
+  0x00010760a380: fa fa 00 00 00 00 00 00 fa fa fd fd fd fd fd fa
+  0x00010760a400: fa fa fd fd fd fd fd fa fa fa 00 00 00 00 02 fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==78034==ABORTING
+[1]    78034 abort      ./build/qjs/qjs test.js

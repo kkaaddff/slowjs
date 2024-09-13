@@ -27,3 +27,4 @@ vcpkg-manifest-install.log
 /tmp_test_*.log
 *.bkp
 *.dtmp
+*.heapsnapshot

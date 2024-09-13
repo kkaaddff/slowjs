@@ -1,81 +1,69 @@
 {
-	"version": 6,
-	"cmakeMinimumRequired": {
-		"major": 3,
-		"minor": 24,
-		"patch": 0
-	},
-	"configurePresets": [
-		{
-			"name": "default",
-			"displayName": "Default Config",
-			"description": "Default build using Ninja generator",
-			"generator": "Ninja",
-			"binaryDir": "${sourceDir}/build/",
-			"cacheVariables": {},
-			"environment": {},
-			"vendor": {}
-		},
-		{
-			"name": "dump-token",
-			"description": "Compile qjs to dump token info",
-			"inherits": "default",
-			"cacheVariables": {
-				"QJS_DUMP_TOKEN": "y"
-			}
-		},
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 24,
+    "patch": 0
+  },
+  "configurePresets": [
     {
-			"name": "dump-bytecode-2",
-			"description": "Compile qjs to dump bytecode",
-			"inherits": "default",
-			"cacheVariables": {
-				"QJS_DUMP_BYTECODE": "2"
-			}
-		}
-	],
-	"buildPresets": [
-		{
-			"name": "qjs",
-			"description": "Build the command line interface of quickjs",
-			"configurePreset": "default",
-			"targets": [
-				"qjs"
-			]
-		},
-		{
-			"name": "run-tests",
-			"configurePreset": "default",
-			"targets": [
-				"run-tests"
-			]
-		},
-		{
-			"name": "test-col",
-			"configurePreset": "dump-token",
-			"targets": [
-				"test-col"
-			]
-		},
+      "name": "default",
+      "displayName": "Default Config",
+      "description": "Default build using Ninja generator",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/",
+      "cacheVariables": {},
+      "environment": {},
+      "vendor": {}
+    },
     {
-			"name": "test-op_loc",
-			"configurePreset": "dump-bytecode-2",
-			"targets": [
-				"test-op_loc"
-			]
-		},
-		{
-			"name": "run-microbench",
-			"configurePreset": "default",
-			"targets": [
-				"microbench"
-			]
-		},
-		{
-			"name": "run-test262",
-			"configurePreset": "default",
-			"targets": [
-				"run-test262-test2"
-			]
-		}
-	]
+      "name": "dump-token",
+      "description": "Compile qjs to dump token info",
+      "inherits": "default",
+      "cacheVariables": {
+        "QJS_DUMP_TOKEN": "y"
+      }
+    },
+    {
+      "name": "dump-bytecode-2",
+      "description": "Compile qjs to dump bytecode",
+      "inherits": "default",
+      "cacheVariables": {
+        "QJS_DUMP_BYTECODE": "2"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "qjs",
+      "description": "Build the command line interface of quickjs",
+      "configurePreset": "default",
+      "targets": ["qjs"]
+    },
+    {
+      "name": "run-tests",
+      "configurePreset": "default",
+      "targets": ["run-tests"]
+    },
+    {
+      "name": "test-col",
+      "configurePreset": "dump-token",
+      "targets": ["test-col"]
+    },
+    {
+      "name": "test-op_loc",
+      "configurePreset": "dump-bytecode-2",
+      "targets": ["test-op_loc"]
+    },
+    {
+      "name": "run-microbench",
+      "configurePreset": "default",
+      "targets": ["microbench"]
+    },
+    {
+      "name": "run-test262",
+      "configurePreset": "default",
+      "targets": ["run-test262-test2"]
+    }
+  ]
 }
